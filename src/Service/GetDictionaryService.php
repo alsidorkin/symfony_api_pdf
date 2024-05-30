@@ -16,11 +16,12 @@ class GetDictionaryService
 
     public function getDictionaryData(): SplObjectStorage
     {
+    
         $storage = new SplObjectStorage();
         $pdf = $this->retrievePDFFile();
         $rawDictionaryData = $this->parsePDFFile($pdf);
       
-        $this->elasticsearchService->indexDictionaryData($rawDictionaryData);
+         $this->elasticsearchService->indexDictionaryData($rawDictionaryData);
 
         foreach ($rawDictionaryData as $dictionaryRow) {
             $dictionaryItem = new DictionaryItem();

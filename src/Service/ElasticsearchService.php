@@ -9,8 +9,13 @@ class ElasticsearchService
     private $indexName;
     public function __construct()
     {
-        $this->client = ClientBuilder::create()->build();
-        $this->indexName = 'pdf_file';
+        // $this->client = ClientBuilder::create()->build();
+
+        // $hosts = [$_ENV['ELASTICSEARCH_HOSTS']];
+        $hosts = ['localhost:9200'];
+        $this->client = ClientBuilder::create()->setHosts($hosts)->build();
+
+        $this->indexName = 'pdf_file1';
     }
 
     

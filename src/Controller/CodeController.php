@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\ElasticsearchService;
+use App\Service\GetDictionaryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,10 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class CodeController extends AbstractController
 {
     private $elasticsearchService;
+    private $dictionaryService;
 
-    public function __construct(ElasticsearchService $elasticsearchService)
+    public function __construct(ElasticsearchService $elasticsearchService,GetDictionaryService $dictionaryService)
     {
         $this->elasticsearchService = $elasticsearchService;
+        $this->dictionaryService = $dictionaryService;
     }
 
     #[Route('/code', name: 'app_code')]
@@ -28,7 +31,7 @@ class CodeController extends AbstractController
     public function getCode(string $searchWord)
     {
         $results = $this->elasticsearchService->search($searchWord, 1);
-        // dd($results);
+        dd($results);
         if (!empty($results)) {
             return new JsonResponse(['data' => $results]);
         }

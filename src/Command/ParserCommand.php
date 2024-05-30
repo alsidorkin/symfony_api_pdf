@@ -7,7 +7,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Service\GetDictionaryService;
-
+use App\Service\ElasticsearchService;
 #[AsCommand(
     name: 'parse:pdf',
     description: 'This command parse pdf file',
@@ -21,9 +21,11 @@ class ParserCommand extends Command
     protected static $defaultDescription = 'This command parse pdf file';
 
     private $getDictionaryService;
-
-    public function __construct(GetDictionaryService $getDictionaryService)
+    private $elasticsearchService;
+    
+    public function __construct(ElasticsearchService $elasticsearchService,GetDictionaryService $getDictionaryService)
     {
+        $this->elasticsearchService = $elasticsearchService;
         $this->getDictionaryService = $getDictionaryService;
         parent::__construct();
     }
